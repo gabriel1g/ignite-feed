@@ -13,6 +13,8 @@
 
   --green-300: #00b37e;
   --green-500: #00875f;
+
+  --red-500: #f75a68;
 }
 
 * {
@@ -35,7 +37,7 @@ button {
   font-weight: 400;
 }
 
-:focus {
+:focus:not(button) {
   border-radius: 3px;
   outline: 1px solid var(--green-500);
   box-shadow: 0 0 5px 1px var(--green-500);

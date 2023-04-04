@@ -1,7 +1,7 @@
+import { Comment } from '../Comment';
 import styles from './styles.module.css';
 
 export function Post() {
-  console.log(new Date());
   return (
     <article className={styles.post}>
       <div className={styles.post_top}>
@@ -38,6 +38,11 @@ export function Post() {
             <button type="submit">Publicar</button>
           </div>
         </form>
+
+        <div className={styles.comment_list}>
+          <Comment />
+          <Comment />
+        </div>
       </div>
     </article>
   );
