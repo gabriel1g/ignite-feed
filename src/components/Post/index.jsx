@@ -11,6 +11,7 @@ export function Post({ author, content, publishedAt }) {
   const [comments, setComments] = useState([]);
   const [newTextComment, setNewTextComment] = useState('');
 
+  const isNewCommentEmpty = newTextComment.length === 0;
   const publicationDate = {
     formattedPublicationDate: format(publishedAt, "dd 'de' LLLL 'às' HH:mm", { locale: ptBR }),
     publicationDateRelativeToNow: formatDistanceToNow(publishedAt, { locale: ptBR, addSuffix: true }),
@@ -74,12 +75,18 @@ export function Post({ author, content, publishedAt }) {
           <strong>Deixe seu feedback</strong>
           <textarea
             onChange={(e) => setNewTextComment(e.target.value)}
+            onInvalid={(e) => {
+              e.target.setCustomValidity('Preencha este campo por favor!');
+              newTextComment !== '' && e.target.setCustomValidity('');
+            }}
             placeholder="Deixe um comentário..."
             required={true}
             value={newTextComment}
           />
           <div className={styles.publish_button}>
-            <button type="submit">Publicar</button>
+            <button disabled={isNewCommentEmpty} type="submit">
+              Publicar
+            </button>
           </div>
         </form>
 
