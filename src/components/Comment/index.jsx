@@ -1,9 +1,16 @@
 import { ThumbsUp, Trash } from '@phosphor-icons/react';
+import { useState } from 'react';
 
 import { Avatar } from '../Avatar';
 import styles from './styles.module.css';
 
 export function Comment({ content, onRemove }) {
+  const [likeCount, setLikeCount] = useState(0);
+
+  function handleLikeComment() {
+    setLikeCount((prevState) => prevState + 1);
+  }
+
   return (
     <div className={styles.comment}>
       <Avatar src="https://github.com/thegabrielrodrigues.png" />
@@ -28,9 +35,9 @@ export function Comment({ content, onRemove }) {
         </div>
 
         <div className={styles.like_button}>
-          <button>
+          <button onClick={handleLikeComment}>
             <ThumbsUp size={24} />
-            <span>Curtir • 33</span>
+            <span>Curtir • {likeCount}</span>
           </button>
         </div>
       </div>
