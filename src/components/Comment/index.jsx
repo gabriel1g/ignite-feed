@@ -3,7 +3,7 @@ import { ThumbsUp, Trash } from '@phosphor-icons/react';
 import { Avatar } from '../Avatar';
 import styles from './styles.module.css';
 
-export function Comment({ content }) {
+export function Comment({ content, onRemove }) {
   return (
     <div className={styles.comment}>
       <Avatar src="https://github.com/thegabrielrodrigues.png" />
@@ -18,7 +18,7 @@ export function Comment({ content }) {
               </time>
             </div>
             <button className={styles.trash} title="Remover comentário">
-              <Trash size={24} />
+              <Trash onClick={() => onRemove(content)} size={24} />
             </button>
           </div>
 

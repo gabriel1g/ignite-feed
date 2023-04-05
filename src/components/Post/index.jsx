@@ -23,6 +23,10 @@ export function Post({ author, content, publishedAt }) {
     setNewTextComment('');
   }
 
+  function handleDeleteComment(commentText) {
+    setComments(comments.filter((comment) => comment !== commentText));
+  }
+
   return (
     <article className={styles.post}>
       <div className={styles.post_top}>
@@ -68,7 +72,12 @@ export function Post({ author, content, publishedAt }) {
       <div className={styles.post_bottom}>
         <form className={styles.comment_form} onSubmit={handleCreateNewComment}>
           <strong>Deixe seu feedback</strong>
-          <textarea onChange={(e) => setNewTextComment(e.target.value)} placeholder="Deixe um comentário..." value={newTextComment} />
+          <textarea
+            onChange={(e) => setNewTextComment(e.target.value)}
+            placeholder="Deixe um comentário..."
+            required={true}
+            value={newTextComment}
+          />
           <div className={styles.publish_button}>
             <button type="submit">Publicar</button>
           </div>
@@ -76,7 +85,7 @@ export function Post({ author, content, publishedAt }) {
 
         <div className={styles.comment_list}>
           {comments.map((comment, index) => (
-            <Comment key={index} content={comment} />
+            <Comment key={index} content={comment} onRemove={handleDeleteComment} />
           ))}
         </div>
       </div>
