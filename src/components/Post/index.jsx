@@ -1,48 +1,83 @@
+import { useState } from 'react';
+
+import { format, formatDistanceToNow } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
+
 import { Avatar } from '../Avatar';
 import { Comment } from '../Comment';
 import styles from './styles.module.css';
 
-export function Post() {
+export function Post({ author, content, publishedAt }) {
+  const [comments, setComments] = useState([]);
+  const [newTextComment, setNewTextComment] = useState('');
+
+  const publicationDate = {
+    formattedPublicationDate: format(publishedAt, "dd 'de' LLLL 'às' HH:mm", { locale: ptBR }),
+    publicationDateRelativeToNow: formatDistanceToNow(publishedAt, { locale: ptBR, addSuffix: true }),
+  };
+
+  function handleCreateNewComment(e) {
+    e.preventDefault();
+
+    setComments([...comments, newTextComment]);
+    setNewTextComment('');
+  }
+
   return (
     <article className={styles.post}>
       <div className={styles.post_top}>
         <div className={styles.author}>
-          <Avatar src="https://github.com/rafaballerini.png" hasBorder={true} />
+          <Avatar src={author.avatarUrl} hasBorder={true} />
           <div className={styles.author_info}>
-            <strong>Jane Cooper</strong>
-            <span>Dev Front-End</span>
+            <strong>{author.name}</strong>
+            <span>{author.role}</span>
           </div>
         </div>
-        <time title="13 de Maio às 08:13" dateTime="2023-05-13 08:13:30">
-          Publicado há 1h
+        <time title={publicationDate.formattedPublicationDate} dateTime={publishedAt.toISOString()}>
+          {publicationDate.publicationDateRelativeToNow}
         </time>
       </div>
 
       <div className={styles.post_content}>
-        <p>Fala galeraa 👋</p>
-        <p>Acabei de subir mais um projeto no meu portifólio. É um projeto que fiz no NLW Return. O nome do projeto é DoctorCare 🚀</p>
-        <p>
-          <a href="#">👉jane.design/doctorcare</a>
-        </p>
-        <p>
-          <a href="#">#novoprojeto</a>
-          <a href="#">#nlw</a>
-          <a href="#">#rocketseat </a>
-        </p>
+        {content.map((line, index) => {
+          switch (line.type) {
+            case 'paragraph':
+              return <p key={index}>{line.content}</p>;
+            case 'link':
+              return (
+                <p key={index}>
+                  <a href="#">{line.content}</a>
+                </p>
+              );
+            case 'hashtags':
+              return (
+                <p key={index}>
+                  {line.content.map((hashtag, index) => (
+                    <a key={index} href="#">
+                      {hashtag}
+                    </a>
+                  ))}
+                </p>
+              );
+            default:
+              break;
+          }
+        })}
       </div>
 
       <div className={styles.post_bottom}>
-        <form className={styles.comment_form}>
+        <form className={styles.comment_form} onSubmit={handleCreateNewComment}>
           <strong>Deixe seu feedback</strong>
-          <textarea placeholder="Deixe um comentário..." />
+          <textarea onChange={(e) => setNewTextComment(e.target.value)} placeholder="Deixe um comentário..." value={newTextComment} />
           <div className={styles.publish_button}>
             <button type="submit">Publicar</button>
           </div>
         </form>
 
         <div className={styles.comment_list}>
-          <Comment />
-          <Comment />
+          {comments.map((comment, index) => (
+            <Comment key={index} content={comment} />
+          ))}
         </div>
       </div>
     </article>

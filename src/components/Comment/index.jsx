@@ -3,16 +3,16 @@ import { ThumbsUp, Trash } from '@phosphor-icons/react';
 import { Avatar } from '../Avatar';
 import styles from './styles.module.css';
 
-export function Comment() {
+export function Comment({ content }) {
   return (
     <div className={styles.comment}>
-      <Avatar src="https://github.com/diego3g.png" />
+      <Avatar src="https://github.com/thegabrielrodrigues.png" />
 
       <div className={styles.comment_column}>
         <div className={styles.comment_box}>
           <div className={styles.comment_box_top}>
             <div className={styles.author_and_time}>
-              <strong>Diego Fernandes</strong>
+              <strong>Gabriel Rodrigues</strong>
               <time title="13 de Maio às 14:28" dateTime="2023-05-13 14:28:40">
                 Há 2 horas atrás
               </time>
@@ -23,11 +23,7 @@ export function Comment() {
           </div>
 
           <div className={styles.comment_box_content}>
-            <p>Muito bom, parabéns!! 👏👏</p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis eos dolore nostrum voluptates praesentium a? Maiores ipsum,
-              error tempore aliquid fuga quae et cupiditate iure ratione facilis ab eius temporibus.
-            </p>
+            <p>{content}</p>
           </div>
         </div>
 
