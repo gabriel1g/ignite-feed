@@ -4,8 +4,13 @@ import { useState } from 'react';
 import { Avatar } from '../Avatar';
 import styles from './styles.module.css';
 
-export function Comment({ content, onRemove }) {
-  const [likeCount, setLikeCount] = useState(0);
+type Props = {
+  content: string;
+  onRemove: (commentText: string) => void;
+};
+
+export function Comment({ content, onRemove }: Props) {
+  const [likeCount, setLikeCount] = useState<number>(0);
 
   function handleLikeComment() {
     setLikeCount((prevState) => prevState + 1);

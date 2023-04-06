@@ -2,9 +2,10 @@ import styles from './App.module.css';
 import { Header } from './components/Header';
 import { Post } from './components/Post';
 import { Sidebar } from './components/Sidebar';
+import { PostDTO } from './dtos/PostDTO';
 import './global.css';
 
-const posts = [
+const posts: PostDTO[] = [
   {
     id: 1,
     author: { avatarUrl: 'https://github.com/rafaballerini.png', name: 'Rafaela Ballerini', role: 'Dev Front-End' },
@@ -24,9 +25,6 @@ const posts = [
       {
         type: 'hashtags',
         content: ['#novoprojeto', '#nlw', '#rocketseat'],
-      },
-      {
-        type: 'teste',
       },
     ],
     publishedAt: new Date('2023-05-13 08:13:30'),
