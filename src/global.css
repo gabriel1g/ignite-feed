@@ -37,7 +37,17 @@ button {
   font-weight: 400;
 }
 
-:focus:not(button) {
+.swal2ConfirmButton {
+  background-color: rgb(220, 55, 65) !important;
+  box-shadow: 0 0 0 3px rgba(220, 55, 65, 0.5) !important;
+}
+
+.swal2DenyButton {
+  background-color: rgb(112, 102, 224) !important;
+  box-shadow: 0 0 0 3px rgb(112, 102, 224) !important;
+}
+
+:focus:not(button, .swal2-popup) {
   border-radius: 3px;
   outline: 1px solid var(--green-500);
   box-shadow: 0 0 5px 1px var(--green-500);

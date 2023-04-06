@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react';
 
 import { format, formatDistanceToNow } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
+import Swal from 'sweetalert2';
 
 import { PostDTO } from '../../dtos/PostDTO';
 import { Avatar } from '../Avatar';
@@ -37,7 +38,49 @@ export function Post({ author, content, publishedAt }: PostDTO) {
   }
 
   function handleDeleteComment(commentText: string) {
-    setComments(comments.filter((comment) => comment !== commentText));
+    Swal.fire({
+      title: 'Excluir comentário',
+      text: 'Você tem certeza que gostaria de excluir este comentário?',
+      icon: 'question',
+      showConfirmButton: true,
+      confirmButtonText: 'Sim, excluir',
+      showDenyButton: true,
+      denyButtonText: 'Cancelar',
+      showLoaderOnConfirm: false,
+      focusDeny: true,
+      reverseButtons: true,
+      background: '#202024',
+      color: 'var(--gray-300)',
+      customClass: {
+        confirmButton: 'swal2ConfirmButton',
+        denyButton: 'swal2DenyButton',
+      },
+    }).then((response) => {
+      if (response.isConfirmed) {
+        setComments(comments.filter((comment) => comment !== commentText));
+
+        Swal.fire({
+          title: 'O seu comentário foi excluído com sucesso',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          background: '#202024',
+          color: 'var(--gray-300)',
+        });
+      } else if (response.isDenied) {
+        Swal.fire({
+          title: 'Operação cancelada pelo usuário',
+          text: 'O seu comentário não foi excluído',
+          icon: 'info',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          background: '#202024',
+          color: 'var(--gray-300)',
+        });
+      }
+    });
   }
 
   return (
